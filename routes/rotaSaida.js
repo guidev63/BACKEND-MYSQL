@@ -111,9 +111,9 @@ router.put("/", (req, res, next) => {
 // Rota para excluir uma saída por ID
 router.delete("/:id", (req, res, next) => {
     const { id } = req.params;
-    db.query("DELETE FROM saida WHERE id=?", id, (error) => {
+    db.query("DELETE FROM saida_produto WHERE id=?", id, (error) => {
         if (error) {
-            console.error("Erro na rota DELETE /:id:", error);
+            console.error("Erro  na  rota DELETE /:id:", error);
             return res.status(500).send({
                 error: error.message
             });
