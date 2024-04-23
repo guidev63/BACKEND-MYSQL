@@ -69,7 +69,7 @@ router.get("/", (req, res, next) => {
         });
         // Consulta para listar todas as entradas
         const selectQuery = `
-                SELECT * FROM PRODUTO
+                SELECT * FROM .produto
             `;
 
         connection.query(selectQuery, (error, rows) => {
@@ -77,6 +77,7 @@ router.get("/", (req, res, next) => {
 
             if (error) {
                 console.error("Erro ao executar consulta SQL:", error.message);
+                console.log("passei aqui")
                 return res.status(500).send({
                     error: "Erro ao executar consulta SQL"
                 });
