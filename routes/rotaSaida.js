@@ -18,12 +18,12 @@ router.get("/:id", (req, res, next) => {
 
         if (rows.length === 0) {
             return res.status(404).send({
-                message: "Saída não encontrada"
+                message: "Saída não Encontrada"
             });
         }
 
         res.status(200).send({
-            message: "Aqui está a saída solicitada",
+            message: "Aqui está a saída Solicitada",
             saida: rows[0]
         });
     });
@@ -48,7 +48,7 @@ router.get("/", (req, res, next) => {
             });
         }
         res.status(200).send({
-            message: "Aqui está a lista de todas as saídas",
+            message: "Aqui está a lista de todas as Saídas",
             saidas: rows
         });
     });
@@ -74,7 +74,7 @@ router.post('/', (req, res, next) => {
             }
 
             res.status(201).send({
-                message: "Saída criada com sucesso!",
+                message: "Saída criada com Sucesso!",
                 saida: {
                     id: results.insertId,
                     id_produto,

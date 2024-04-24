@@ -29,7 +29,7 @@ router.get("/:id", (req, res, next) => {
             }
 
             res.status(200).send({
-                mensagem: "Aqui está a Entrada solicitada",
+                mensagem: "Aqui está a Entrada Solicitada",
                 entrada: rows
             });
         });

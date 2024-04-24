@@ -86,7 +86,7 @@ router.get("/", (req, res, next) => {
 
 
             res.status(200).send({
-                mensagem: "Aqui estão todas os produtos",
+                mensagem: "Aqui estão todas os Produtos",
                 produtos: rows
             });
         });
@@ -101,7 +101,7 @@ router.post('/', (req, res, next) => {
     // Validação dos campos
     if (!status || !descricao || !estoque_minimo || !estoque_maximo) {
         return res.status(400).send({
-            mensagem: "Todos os campos são obrigatórios"
+            mensagem: "Todos os campos são Obrigatórios"
         });
     }
 
@@ -122,7 +122,7 @@ router.post('/', (req, res, next) => {
             }
 
             res.status(201).send({
-                mensagem: "Produto criado com sucesso!",
+                mensagem: "Produto criado com Sucesso!",
                 produto: {
                     id: result.insertId,
                     status: status,
@@ -157,7 +157,7 @@ router.put("/:id", (req, res, next) => {
             }
 
             res.status(200).send({
-                mensagem: "Produto atualizado com sucesso!"
+                mensagem: "Produto atualizado com Sucesso!"
             });
         });
     });
@@ -184,7 +184,7 @@ router.delete("/:id", (req, res, next) => {
             }
 
             res.status(200).send({
-                mensagem: "Produto excluído com sucesso!"
+                mensagem: "Produto excluído com Sucesso!"
             });
         });
     });

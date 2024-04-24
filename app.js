@@ -12,6 +12,7 @@ app.use('/assets', express.static('./assets'));
 
 //rotas
 
+
 const rotaUsuario = require("./routes/rotaUsuario");
 const rotaProduto = require("./routes/rotaProduto");
 const rotaEntrada = require("./routes/rotaEntrada");
