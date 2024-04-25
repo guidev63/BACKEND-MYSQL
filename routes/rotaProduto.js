@@ -11,7 +11,7 @@ const ERROR_MESSAGE = "Erro ao executar operação";
 // Rota para obter um Produto pelo ID
 router.get("/:id", (req, res, next) => {
     const { id } = req.params;
-
+     console.log("senhor help!!!!!")
     mysql.getConnection((error, connection) => {
         if (error) {
             return res.status(500).send({
@@ -30,7 +30,7 @@ router.get("/:id", (req, res, next) => {
 
             res.status(200).send({
                 mensagem: "Aqui está o Produto solicitado",
-                produto: rows
+                produtos: rows
             });
         });
     });
@@ -178,6 +178,7 @@ router.delete("/:id", (req, res, next) => {
             connection.release(); // Liberar conexão após exclusão
 
             if (error) {
+                console.log("passei aqui")
                 return res.status(500).send({
                     error: error.message
                 });
