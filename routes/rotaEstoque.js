@@ -68,7 +68,7 @@ router.get("/:id", (req, res, next) => {
             }
 
             res.status(200).send({
-                message: "Aqui está a lista de Estoque",
+                message: "Aqui está a Lista de Estoque",
                 estoque: rows
             });
         });
@@ -90,7 +90,7 @@ router.post("/", (req, res) => {
             connection.release();
 
             if (queryError) {
-                console.error('Erro ao inserir no estoque:', queryError.message);
+                console.error('Erro ao inserir no Estoque:', queryError.message);
                 return res.status(500).send({
                     error: queryError.message
                 });
@@ -132,7 +132,7 @@ router.put("/:id", (req, res) => {
             }
 
             res.status(200).send({
-                message: "Estoque atualizado com sucesso!"
+                message: "Estoque Atualizado com Sucesso!"
             });
         });
     });
@@ -160,7 +160,7 @@ router.delete("/:id", (req, res) => {
             }
 
             res.status(200).send({
-                message: "Estoque excluído com sucesso!"
+                message: "Estoque Excluído com Sucesso!"
             });
         });
     });
