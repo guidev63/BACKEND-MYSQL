@@ -2,7 +2,7 @@ const mysql =require("mysql");
 var pool =mysql.createPool({
     "user":"354982",
     "password":"!@gui2125",
-    "database":"guilhermedev23_dados",
+    "database":"guilhermedev23_oficina",
     "host":"mysql-guilhermedev23.alwaysdata.net",
     "port":3306
 

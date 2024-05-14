@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const db = require("../mysql").pool;
 
-// Configuração do pool de conexões MySQL
+/// Configuração do pool de conexões MySQL
 
 
-// Rota para obter uma saída específica por ID
+/// Rota para obter uma saída específica por ID
 router.get("/:id", (req, res, next) => {
     const { id } = req.params;
 
@@ -29,7 +29,7 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-// Rota para obter todas as saídas com informações adicionais dos produtos
+/// Rota para obter todas as saídas com informações adicionais dos produtos
 router.get("/", (req, res, next) => {
     db.query(`SELECT
                     saida_produto.id as id,
@@ -54,7 +54,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
-// Rota para criar uma nova saída
+/// Rota para criar uma nova saída
 router.post('/', (req, res, next) => {
     const { id_produto, quantidade, valor_unitario, data_saida } = req.body;
 
@@ -86,7 +86,7 @@ router.post('/', (req, res, next) => {
         });
 });
 
-// Rota para atualizar uma saída existente
+/// Rota para atualizar uma saída existente
 router.put("/", (req, res, next) => {
     const { id, id_produto, quantidade, valor_unitario, data_saida } = req.body;
 
@@ -108,7 +108,7 @@ router.put("/", (req, res, next) => {
         });
 });
 
-// Rota para excluir uma saída por ID
+/// Rota para excluir uma saída por ID
 router.delete("/:id", (req, res, next) => {
     const { id } = req.params;
     db.query("DELETE FROM saida_produto WHERE id=?", id, (error) => {

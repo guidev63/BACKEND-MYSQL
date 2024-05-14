@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const mysql = require("../mysql").pool;
-//const bcrypt = require('bcrypt');//
-//const jwt = require('jsonwebtoken');//
+///const bcrypt = require('bcrypt');//
+///const jwt = require('jsonwebtoken');//
 
 // Mensagens de sucesso e erro
 const SUCCESS_MESSAGE = "Operação realizada com sucesso";
 const ERROR_MESSAGE = "Erro ao executar operação";
 
-// Rota para obter um Produto pelo ID
+/// Rota para obter um Produto pelo ID
 router.get("/:id", (req, res, next) => {
     const { id } = req.params;
      console.log("senhor help!!!!!")
@@ -36,17 +36,17 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-// Rota para listar todos os Produtos
+/// Rota para listar todos os Produtos
 router.get("/", (req, res, next) => {
     mysql.getConnection((error, connection) => {
         if (error) {
             console.error("Erro ao obter conexão:", error.message);
             return res.status(500).send({
-                error: "Erro ao obter conexão com o banco de dados"
+                error: "Erro ao obter conexão com o Banco de Dados"
             });
         }
 
-        // Verifica se a tabela "entrada" existe e, se não existir, a cria
+        /// Verifica se a tabela "entrada" existe e, se não existir, a cria
         const createTableQuery = `
             CREATE TABLE IF NOT EXISTS entrada (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -67,13 +67,13 @@ router.get("/", (req, res, next) => {
                 });
             }
         });
-        // Consulta para listar todas as entradas
+        /// Consulta para listar todas as entradas
         const selectQuery = `
                 SELECT * FROM .produto
             `;
 
         connection.query(selectQuery, (error, rows) => {
-            connection.release(); // Liberar conexão após consulta
+            connection.release(); /// Liberar conexão após consulta
 
             if (error) {
                 console.error("Erro ao executar consulta SQL:", error.message);
@@ -94,11 +94,11 @@ router.get("/", (req, res, next) => {
     });
 });
 
-// Rota para criar um novo Produto
+/// Rota para criar um novo Produto
 router.post('/', (req, res, next) => {
     const { status, descricao, estoque_minimo, estoque_maximo } = req.body;
 
-    // Validação dos campos
+    /// Validação dos campos
     if (!status || !descricao || !estoque_minimo || !estoque_maximo) {
         return res.status(400).send({
             mensagem: "Todos os campos são Obrigatórios"
@@ -113,7 +113,7 @@ router.post('/', (req, res, next) => {
         }
 
         connection.query("INSERT INTO produto (status, descricao, estoque_minimo, estoque_maximo) VALUES (?, ?, ?, ?)", [status, descricao, estoque_minimo, estoque_maximo], (error, result) => {
-            connection.release(); // Liberar conexão após inserção
+            connection.release(); /// Liberar conexão após inserção
 
             if (error) {
                 return res.status(500).send({
@@ -135,7 +135,7 @@ router.post('/', (req, res, next) => {
     });
 });
 
-// Rota para atualizar um Produto existente
+/// Rota para atualizar um Produto existente
 router.put("/:id", (req, res, next) => {
     const { id } = req.params;
     const { status, descricao, estoque_minimo, estoque_maximo } = req.body;

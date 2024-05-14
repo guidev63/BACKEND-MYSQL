@@ -13,6 +13,7 @@ router.post('/login', (req, res, next) => {
 
     mysql.getConnection((error, connection) => {
         if (error) {
+            
             return res.status(500).send({
                 error: error.message
             });
@@ -22,6 +23,7 @@ router.post('/login', (req, res, next) => {
             connection.release(); // Liberar conexão após consulta
 
             if (error) {
+                console.log(error)
                 return res.status(500).send({
                     error: error.message
                 });
@@ -99,7 +101,7 @@ router.get("/", (req, res, next) => {
         }
 
         connection.query("SELECT * FROM usuario", (error, results) => {
-            connection.release(); // Liberar conexão após consulta
+            connection.release(); // Liberar conexão após Consulta
 
             if (error) {
                 return res.status(500).send({
