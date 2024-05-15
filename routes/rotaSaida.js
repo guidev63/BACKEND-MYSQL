@@ -5,7 +5,9 @@ const db = require("../mysql").pool;
 /// Configuração do pool de conexões MySQL
 
 
-/// Rota para obter uma saída específica por ID
+/// Rota para Obter uma Saída Específica Por ID
+
+
 router.get("/:id", (req, res, next) => {
     const { id } = req.params;
 
@@ -23,13 +25,14 @@ router.get("/:id", (req, res, next) => {
         }
 
         res.status(200).send({
-            message: "Aqui está a saída Solicitada",
+            message: "Aqui Está a Saída Solicitada",
             saida: rows[0]
         });
     });
 });
 
 /// Rota para obter todas as saídas com informações adicionais dos produtos
+
 router.get("/", (req, res, next) => {
     db.query(`SELECT
                     saida_produto.id as id,
@@ -48,7 +51,7 @@ router.get("/", (req, res, next) => {
             });
         }
         res.status(200).send({
-            message: "Aqui está a lista de todas as Saídas",
+            message: "Aqui está a Lista de Todas as Saídas",
             saidas: rows
         });
     });
@@ -92,7 +95,7 @@ router.put("/", (req, res, next) => {
 
     if (!id_produto || !quantidade || !valor_unitario || !data_saida) {
         return res.status(400).send({
-            message: "Parâmetros inválidos"
+            message: "Parâmetros Inválidos"
         });
     }
 
