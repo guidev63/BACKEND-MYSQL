@@ -96,7 +96,7 @@ router.get("/:id", (req, res, next) => {
 
             res.status(200).send({
                 mensagem: "Aqui está o Cliente Solicitado",
-                cliente: results[0]
+                clientes: results[0]
             });
         });
     });

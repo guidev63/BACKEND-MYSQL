@@ -10,6 +10,8 @@ app.use(bodyParser.json());
 app.use('/uploads', express.static('./uploads'));
 app.use('/assets', express.static('./assets'));
 
+
+
 //rotas
 
 
@@ -18,6 +20,10 @@ const rotaProduto = require("./routes/rotaProduto");
 const rotaEntrada = require("./routes/rotaEntrada");
 const rotaSaida = require("./routes/rotaSaida");
 const rotaEstoque = require("./routes/rotaEstoque");
+const rotaCientes = require("./routes/rotaClientes");
+const rotaFornecedores = require("./routes/rotaFornecedores");
+const rotaServicos = require("./routes/rotaServicos");
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
 
@@ -32,11 +38,20 @@ app.use((req, res, next) => {
     next();
 });
 
+
+
+
 app.use("/usuario", rotaUsuario);
 app.use("/produtos", rotaProduto);
 app.use("/entrada", rotaEntrada);
 app.use("/saida", rotaSaida);
 app.use("/estoque", rotaEstoque);
+app.use("/clientes",rotaCientes)
+app.use("/fornecedores",rotaFornecedores)
+app.use("/servicos",rotaServicos)
+
+
+
 
 app.use((req, res, next) => {
     const erro = new Error("Não encontrado!");
