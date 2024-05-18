@@ -4,7 +4,9 @@ const db = require("../mysql").pool;
 
 
 
+
 /// Configuração do pool de conexões MySQL
+
 
 
 /// Rota para obter uma venda específica por ID
@@ -13,7 +15,7 @@ const db = require("../mysql").pool;
 router.get("/:id", (req, res, next) => {
     const { id } = req.params;
 
-    db.query("SELECT * FROM venda WHERE id=?", [id], (error, rows) => {
+    db.query("SELECT *  FROM vendas WHERE id=?", [id], (error, rows) => {
         if (error) {
             return res.status(500).send({
                 error: error.message
@@ -22,13 +24,13 @@ router.get("/:id", (req, res, next) => {
 
         if (rows.length === 0) {
             return res.status(404).send({
-                message: "Venda não Encontrada"
+                message: "Venda Não Encontrada"
             });
         }
 
         res.status(200).send({
-            message: "Aqui está a Venda Solicitada",
-            venda: rows[0]
+            message: "Aqui Está A Venda Solicitada",
+            vendas: rows[0]
         });
     });
 });
@@ -41,7 +43,7 @@ router.get("/", (req, res, next) => {
                     venda.data_venda as data_venda,
                     venda.valor_total as valor_total,
                     cliente.nome as cliente_nome
-                FROM venda
+                FROM vendas
                 INNER JOIN cliente 
                 ON venda.cliente_id = cliente.id`, (error, rows) => {
         if (error) {
@@ -68,10 +70,10 @@ router.post('/', (req, res, next) => {
         });
     }
 
-    db.query(`INSERT INTO venda (cliente_id, data_venda, valor_total) VALUES (?, ?, ?)`,
+    db.query(`INSERT INTO vendas (cliente_id, data_venda, valor_total) VALUES (?, ?, ?)`,
         [cliente_id, data_venda, valor_total], (error, results) => {
             if (error) {
-                console.error("Erro na rota POST /:", error);
+                console.error("Erro na Rota POST /:", error);
                 return res.status(500).send({
                     error: error.message
                 });
@@ -79,7 +81,7 @@ router.post('/', (req, res, next) => {
 
             res.status(201).send({
                 message: "Venda Criada com Sucesso!",
-                venda: {
+                vendas: {
                     id: results.insertId,
                     cliente_id,
                     data_venda,
@@ -116,14 +118,14 @@ router.put("/", (req, res, next) => {
 
 router.delete("/:id", (req, res, next) => {
     const { id } = req.params;
-    db.query("DELETE FROM venda WHERE id=?", [id], (error) => {
+    db.query("DELETE FROM vendas WHERE id=?", [id], (error) => {
         if (error) {
             console.error("Erro na rota DELETE /:id:", error);
             return res.status(500).send({
                 error: error.message
             });
         }
-        res.status(200).send({ message: "Venda Excluída com Sucesso" });
+        res.status(200).send({ message: "Venda Excluída Com Sucesso" });
     });
 });
 

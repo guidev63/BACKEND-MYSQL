@@ -24,6 +24,7 @@ const rotaCientes = require("./routes/rotaClientes");
 const rotaFornecedores = require("./routes/rotaFornecedores");
 const rotaServicos = require("./routes/rotaServicos");
 const rotaChecklist = require("./routes/rotaChecklist");
+const rotaPagamentos = require("./routes/rotaPagamentos");
 
 
 app.use((req, res, next) => {
@@ -47,10 +48,12 @@ app.use("/produtos", rotaProduto);
 app.use("/entrada", rotaEntrada);
 app.use("/saida", rotaSaida);
 app.use("/estoque", rotaEstoque);
-app.use("/clientes",rotaCientes)
-app.use("/fornecedores",rotaFornecedores)
-app.use("/servicos",rotaServicos)
-app.use("/checklist",rotaChecklist)
+app.use("/clientes",rotaCientes);
+app.use("/fornecedores",rotaFornecedores);
+app.use("/servicos",rotaServicos);
+app.use("/checklist",rotaChecklist);
+app.use("/Pagamentos",rotaPagamentos);
+
 
 
 

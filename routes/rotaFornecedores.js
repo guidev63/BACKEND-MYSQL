@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
     // Validação dos campos
     if (!tipo || !nome || !cpfcnpj || !email || !contato || !endereco || !cidade || !uf || !cep) {
         return res.status(400).send({
-            mensagem: "Falha ao cadastrar Fornecedor. Verifique os campos Obrigatórios."
+            mensagem: "Falha Ao cadastrar Fornecedor. Verifique os Campos Obrigatórios."
         });
     }
 
@@ -36,7 +36,7 @@ router.post('/', (req, res, next) => {
             if (results.length > 0) {
                 connection.release(); // Liberar conexão
                 return res.status(400).send({
-                    mensagem: "E-mail já Cadastrado Para outro Fornecedor."
+                    mensagem: "E-mail Já Cadastrado Para Outro Fornecedor."
                 });
             }
 
@@ -52,7 +52,7 @@ router.post('/', (req, res, next) => {
                         });
                     }
                     res.status(201).send({
-                        mensagem: "Cadastro criado com Sucesso!",
+                        mensagem: "Cadastro criado Com Sucesso!",
                         fornecedor: {
                             id: results.insertId,
                             tipo,
@@ -95,7 +95,7 @@ router.get("/:id", (req, res, next) => {
             }
 
             res.status(200).send({
-                mensagem: "Aqui está o Fornecedor Solicitado",
+                mensagem: "Aqui está O Fornecedor Solicitado",
                 fornecedores: results[0]
             });
         });
@@ -120,7 +120,7 @@ router.get("/", (req, res, next) => {
                 });
             }
             res.status(200).send({
-                mensagem: "Aqui Estão Todos os Fornecedores",
+                mensagem: "Aqui Estão Todos Os Fornecedores",
                 fornecedores: results
             });
         });
