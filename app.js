@@ -23,6 +23,8 @@ const rotaEstoque = require("./routes/rotaEstoque");
 const rotaCientes = require("./routes/rotaClientes");
 const rotaFornecedores = require("./routes/rotaFornecedores");
 const rotaServicos = require("./routes/rotaServicos");
+const rotaChecklist = require("./routes/rotaChecklist");
+
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -40,7 +42,6 @@ app.use((req, res, next) => {
 
 
 
-
 app.use("/usuario", rotaUsuario);
 app.use("/produtos", rotaProduto);
 app.use("/entrada", rotaEntrada);
@@ -49,6 +50,7 @@ app.use("/estoque", rotaEstoque);
 app.use("/clientes",rotaCientes)
 app.use("/fornecedores",rotaFornecedores)
 app.use("/servicos",rotaServicos)
+app.use("/checklist",rotaChecklist)
 
 
 

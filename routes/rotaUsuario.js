@@ -13,7 +13,7 @@ router.post('/login', (req, res, next) => {
 
     mysql.getConnection((error, connection) => {
         if (error) {
-            
+                        
             return res.status(500).send({
                 error: error.message
             });
