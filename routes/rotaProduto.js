@@ -122,7 +122,7 @@ router.post('/', (req, res, next) => {
             }
 
             res.status(201).send({
-                mensagem: "Produto criado com Sucesso!",
+                mensagem: "Produto criado Com Sucesso!",
                 produto: {
                     id: result.insertId,
                     status: status,

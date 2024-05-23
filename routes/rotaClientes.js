@@ -2,24 +2,22 @@ const express = require("express");
 const router = express.Router();
 const mysql = require("../mysql").pool;
 
-// Mensagens de sucesso e erro
-const SUCCESS_MESSAGE = "Operação realizada com sucesso";
-const ERROR_MESSAGE = "Erro ao executar operação";
-
 // Rota para criar um novo cliente
 router.post('/', (req, res, next) => {
     const { tipo, genero, nome, cpfcnpj, email, contato, endereco, setor, cidade, uf, cep, complemento } = req.body;
 
     // Validação dos campos
     if (!tipo || !nome || !cpfcnpj || !email || !contato || !endereco || !cidade || !uf || !cep) {
+        console.log("passei aqui ")
         return res.status(400).send({
-            mensagem: "Falha ao cadastrar Cliente. Verifique os campos Obrigatórios."
+            mensagem: "Falha ao cadastrar cliente. Verifique os campos obrigatórios."
         });
     }
 
     // Verifica se o email já está cadastrado
     mysql.getConnection((error, connection) => {
         if (error) {
+            console.error(error);
             return res.status(500).send({
                 error: error.message
             });
@@ -28,6 +26,7 @@ router.post('/', (req, res, next) => {
         connection.query(`SELECT * FROM clientes WHERE email = ?`, [email], (error, results) => {
             if (error) {
                 connection.release(); // Liberar conexão em caso de erro
+                console.error(error);
                 return res.status(500).send({
                     error: error.message
                 });
@@ -35,41 +34,33 @@ router.post('/', (req, res, next) => {
 
             if (results.length > 0) {
                 connection.release(); // Liberar conexão
+              
                 return res.status(400).send({
-                    mensagem: "E-mail já Cadastrado para outro Cliente."
+                    mensagem: "E-mail já cadastrado para outro cliente."
                 });
             }
 
             // Insere o novo cliente no banco de dados
-            connection.query(`INSERT INTO clientes (tipo, genero, nome, cpfcnpj, email, contato, endereco, setor, cidade, uf, cep, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            connection.query(
+                `INSERT INTO clientes (tipo, genero, nome, cpfcnpj, email, contato, endereco, setor, cidade, uf, cep, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [tipo, genero, nome, cpfcnpj, email, contato, endereco, setor, cidade, uf, cep, complemento],
                 (insertError, results) => {
                     connection.release(); // Liberar conexão após a inserção
 
                     if (insertError) {
+                        console.error(insertError);
                         return res.status(500).send({
                             error: insertError.message
                         });
                     }
                     res.status(201).send({
-                        mensagem: "Cadastro criado com Sucesso!",
+                        mensagem: "Cadastro criado com sucesso!",
                         cliente: {
-                            id: results.insertId,
-                            tipo,
-                            genero,
-                            nome,
-                            cpfcnpj,
-                            email,
-                            contato,
-                            endereco,
-                            setor,
-                            cidade,
-                            uf,
-                            cep,
-                            complemento
+                            id: results.insertId
                         }
                     });
-                });
+                }
+            );
         });
     });
 });
@@ -80,6 +71,7 @@ router.get("/:id", (req, res, next) => {
 
     mysql.getConnection((error, connection) => {
         if (error) {
+            console.error(error);
             return res.status(500).send({
                 error: error.message
             });
@@ -89,14 +81,21 @@ router.get("/:id", (req, res, next) => {
             connection.release(); // Liberar conexão após consulta
 
             if (error) {
+                console.error(error);
                 return res.status(500).send({
                     error: error.message
                 });
             }
 
+            if (results.length === 0) {
+                return res.status(404).send({
+                    mensagem: "Cliente não encontrado."
+                });
+            }
+
             res.status(200).send({
-                mensagem: "Aqui está o Cliente Solicitado",
-                clientes: results[0]
+                mensagem: "Aqui está o cliente solicitado",
+                cliente: results[0]
             });
         });
     });
@@ -106,27 +105,27 @@ router.get("/:id", (req, res, next) => {
 router.get("/", (req, res, next) => {
     mysql.getConnection((error, connection) => {
         if (error) {
+            console.error(error);
             return res.status(500).send({
                 error: error.message
             });
         }
 
         connection.query("SELECT * FROM clientes", (error, results) => {
-            connection.release(); // Liberar conexão após Consulta
+            connection.release(); // Liberar conexão após consulta
 
             if (error) {
+                console.error(error);
                 return res.status(500).send({
                     error: error.message
                 });
             }
             res.status(200).send({
-                mensagem: "Aqui Estão Todos os Clientes",
+                mensagem: "Aqui estão todos os clientes",
                 clientes: results
             });
         });
     });
 });
-
-// Outras rotas como atualizar e excluir podem ser adicionadas conforme necessário
 
 module.exports = router;

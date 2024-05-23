@@ -15,6 +15,7 @@ app.use('/assets', express.static('./assets'));
 //rotas
 
 
+
 const rotaUsuario = require("./routes/rotaUsuario");
 const rotaProduto = require("./routes/rotaProduto");
 const rotaEntrada = require("./routes/rotaEntrada");
@@ -25,6 +26,8 @@ const rotaFornecedores = require("./routes/rotaFornecedores");
 const rotaServicos = require("./routes/rotaServicos");
 const rotaChecklist = require("./routes/rotaChecklist");
 const rotaPagamentos = require("./routes/rotaPagamentos");
+
+
 
 
 app.use((req, res, next) => {

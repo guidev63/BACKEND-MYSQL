@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
     // Validação dos campos
     if (!tipo || !nome || !cpfcnpj || !email || !contato || !endereco || !cidade || !uf || !cep) {
         return res.status(400).send({
-            mensagem: "Falha Ao cadastrar Fornecedor. Verifique os Campos Obrigatórios."
+            mensagem: "Falha ao cadastrar fornecedor. Verifique os campos obrigatórios."
         });
     }
 
@@ -36,7 +36,7 @@ router.post('/', (req, res, next) => {
             if (results.length > 0) {
                 connection.release(); // Liberar conexão
                 return res.status(400).send({
-                    mensagem: "E-mail Já Cadastrado Para Outro Fornecedor."
+                    mensagem: "E-mail já cadastrado para outro fornecedor."
                 });
             }
 
@@ -52,7 +52,7 @@ router.post('/', (req, res, next) => {
                         });
                     }
                     res.status(201).send({
-                        mensagem: "Cadastro criado Com Sucesso!",
+                        mensagem: "Cadastro criado com sucesso!",
                         fornecedor: {
                             id: results.insertId,
                             tipo,
@@ -94,9 +94,15 @@ router.get("/:id", (req, res, next) => {
                 });
             }
 
+            if (results.length === 0) {
+                return res.status(404).send({
+                    mensagem: "Fornecedor não encontrado."
+                });
+            }
+
             res.status(200).send({
-                mensagem: "Aqui está O Fornecedor Solicitado",
-                fornecedores: results[0]
+                mensagem: "Aqui está o fornecedor solicitado",
+                fornecedor: results[0]
             });
         });
     });
@@ -112,7 +118,7 @@ router.get("/", (req, res, next) => {
         }
 
         connection.query("SELECT * FROM fornecedores", (error, results) => {
-            connection.release(); // Liberar conexão após Consulta
+            connection.release(); // Liberar conexão após consulta
 
             if (error) {
                 return res.status(500).send({
@@ -120,7 +126,7 @@ router.get("/", (req, res, next) => {
                 });
             }
             res.status(200).send({
-                mensagem: "Aqui Estão Todos Os Fornecedores",
+                mensagem: "Aqui estão todos os fornecedores",
                 fornecedores: results
             });
         });
