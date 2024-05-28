@@ -6,18 +6,18 @@ const mysql = require("../mysql").pool;
 const SUCCESS_MESSAGE = "Operação realizada com sucesso";
 const ERROR_MESSAGE = "Erro ao executar operação";
 
-// Rota para registrar um novo pagamento
+// Rota para criar um novo faturamento
 router.post('/', (req, res, next) => {
-    const { faturamento_id, valor_pago, data_pagamento } = req.body;
+    const { ordem_de_servico_id, venda_id, valor_total, data_faturamento } = req.body;
 
     // Validação dos campos
-    if (!faturamento_id || !valor_pago || !data_pagamento) {
+    if (!ordem_de_servico_id || !venda_id || !valor_total || !data_faturamento) {
         return res.status(400).send({
-            mensagem: "Falha Ao registrar Pagamento. Verifique os Campos Obrigatórios."
+            mensagem: "Falha ao cadastrar faturamento. Verifique os campos obrigatórios."
         });
     }
 
-    // Insere o novo pagamento no banco de dados
+    // Insere o novo faturamento no banco de dados
     mysql.getConnection((error, connection) => {
         if (error) {
             return res.status(500).send({
@@ -25,8 +25,8 @@ router.post('/', (req, res, next) => {
             });
         }
 
-        connection.query(`INSERT INTO pagamentos (faturamento_id, valor_pago, data_pagamento) VALUES (?, ?, ?)`,
-            [faturamento_id, valor_pago, data_pagamento],
+        connection.query(`INSERT INTO faturamento (ordem_de_servico_id, venda_id, valor_total, data_faturamento) VALUES (?, ?, ?, ?)`,
+            [ordem_de_servico_id, venda_id, valor_total, data_faturamento],
             (insertError, results) => {
                 connection.release(); // Liberar conexão após a inserção
 
@@ -36,19 +36,20 @@ router.post('/', (req, res, next) => {
                     });
                 }
                 res.status(201).send({
-                    mensagem: "Pagamento registrado com sucesso!",
-                    pagamento: {
+                    mensagem: "Cadastro criado com sucesso!",
+                    faturamento: {
                         id: results.insertId,
-                        faturamento_id,
-                        valor_pago,
-                        data_pagamento
+                        ordem_de_servico_id,
+                        venda_id,
+                        valor_total,
+                        data_faturamento
                     }
                 });
             });
     });
 });
 
-// Rota para obter um pagamento pelo ID
+// Rota para obter um faturamento pelo ID
 router.get("/:id", (req, res, next) => {
     const { id } = req.params;
 
@@ -59,7 +60,7 @@ router.get("/:id", (req, res, next) => {
             });
         }
 
-        connection.query("SELECT * FROM pagamentos WHERE id=?", [id], (error, results) => {
+        connection.query("SELECT * FROM faturamento WHERE id=?", [id], (error, results) => {
             connection.release(); // Liberar conexão após consulta
 
             if (error) {
@@ -68,15 +69,21 @@ router.get("/:id", (req, res, next) => {
                 });
             }
 
+            if (results.length === 0) {
+                return res.status(404).send({
+                    mensagem: "Faturamento não encontrado."
+                });
+            }
+
             res.status(200).send({
-                mensagem: "Aqui Está o pagamento solicitado",
-                pagamentos: results[0]
+                mensagem: "Aqui está o faturamento solicitado",
+                faturamento: results[0]
             });
         });
     });
 });
 
-// Rota para listar todos os pagamentos
+// Rota para listar todos os faturamentos
 router.get("/", (req, res, next) => {
     mysql.getConnection((error, connection) => {
         if (error) {
@@ -85,7 +92,7 @@ router.get("/", (req, res, next) => {
             });
         }
 
-        connection.query("SELECT * FROM pagamentos", (error, results) => {
+        connection.query("SELECT * FROM faturamento", (error, results) => {
             connection.release(); // Liberar conexão após consulta
 
             if (error) {
@@ -94,8 +101,8 @@ router.get("/", (req, res, next) => {
                 });
             }
             res.status(200).send({
-                mensagem: "Aqui estão todos os pagamentos",
-                pagamentos: results
+                mensagem: "Aqui estão todos os faturamentos",
+                faturamento: results
             });
         });
     });
