@@ -26,7 +26,7 @@ const rotaFornecedores = require("./routes/rotaFornecedores");
 const rotaServicos = require("./routes/rotaServicos");
 const rotaChecklist = require("./routes/rotaChecklist");
 const rotaPagamentos = require("./routes/rotaPagamentos");
-const rotaFaturamento = require("./routes/rotaFaturmento");
+
 
 
 
@@ -57,7 +57,6 @@ app.use("/fornecedores",rotaFornecedores);
 app.use("/servicos",rotaServicos);
 app.use("/checklist",rotaChecklist);
 app.use("/Pagamentos",rotaPagamentos);
-app.use("/Faturamento",rotaFaturamento);
 
 
 
